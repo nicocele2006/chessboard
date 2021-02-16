@@ -15,17 +15,19 @@ pieza_alfil_negro = -4
 pieza_dama_negro = -5
 mueve_dos_posiciones = 16
 mueve_una_posiciones = 8
-def valor_absoluto(valor):
-    return valor*-1
+def vabs(valor):
+    if (valor < 0 ):
+        valor = valor*-1
+    return valor
 
 def hacerMovimietoPeon(origen, destino, tablero):
     movValido = False
 
-    if(tablero[origen] == valor_absoluto(pieza_peon)):
+    if(vabs(tablero[origen])== vabs(pieza_peon)):
         if(tablero[destino] == casillero_vacio): #mover
-            if(valor_absoluto(destino-origen)==mueve_dos_posiciones):
+            if(vabs(destino-origen)==mueve_dos_posiciones):
                 if(origen < 16 and origen > 7 or origen < 56 and origen >48):
-                    if(tablero[origen + 8] != casillero_vacio):
+                    if(tablero[origen + 8] == casillero_vacio):#nadie en el camino
                         tablero[destino] = tablero[origen]
                         tablero[origen] = casillero_vacio
                         movValido = True
@@ -34,7 +36,7 @@ def hacerMovimietoPeon(origen, destino, tablero):
                 else:
                     print("movimiento no valido")
             else:#mueve desde 1era fila
-                if(valor_absoluto(valor_absoluto(destino)-valor_absoluto(origen))==mueve_una_posiciones):
+                if(vabs(vabs(destino)-vabs(origen))==mueve_una_posiciones):
                     tablero[destino] = tablero[origen]
                     tablero[origen] = casillero_vacio
                     movValido = True
@@ -61,7 +63,7 @@ tablero = array ('i',[
 resultado = hacerMovimietoPeon(8, 16, tablero)
 resultado = hacerMovimietoPeon(9, 25, tablero)
 resultado = hacerMovimietoPeon(10, 0, tablero)
-#resultado = hacerMovimietoPeon(11, 19, tablero)
+resultado = hacerMovimietoPeon(11, 35, tablero)
 # Presentar Tablero
 for pos in range(0, 63, 8):
     for posic in range(pos, pos+8):
